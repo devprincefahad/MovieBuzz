@@ -6,6 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".ui.home.MainActivity">
 
         <RelativeLayout
@@ -18,26 +19,26 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tvNewsIt"
+                android:id="@+id/textViewMovieBuzz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:padding="10dp"
                 android:text="MovieBuzz"
                 android:textColor="#FFF"
-                android:textSize="25sp"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewTopRated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="Top Rated Movies"
-            android:textColor="@color/white"
-            android:textSize="20sp"
+            android:layout_margin="15dp"
+            android:text="Top Rated"
+            android:textColor="@color/black"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +51,54 @@
             android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewTopRated" />
+
+        <TextView
+            android:id="@+id/textViewCategories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="Explore"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="#000"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerTop" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCategories" />
+
+        <TextView
+            android:id="@+id/textViewUpcoming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="Upcoming"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerCategories" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerUpcoming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewUpcoming" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

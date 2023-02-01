@@ -20,7 +20,7 @@ class TopMoviesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         TopMoviesViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.top_movies_list_item, parent, false)
+                .inflate(R.layout.vertical_movies_list_item, parent, false)
         )
 
     override fun onBindViewHolder(holder: TopMoviesViewHolder, position: Int) {

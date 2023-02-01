@@ -11,6 +11,7 @@ import dev.prince.moviebuzz.R
 import dev.prince.moviebuzz.data.Result
 import dev.prince.moviebuzz.databinding.ActivityMainBinding
 import dev.prince.moviebuzz.ui.adapter.TopMoviesAdapter
+import dev.prince.moviebuzz.ui.adapter.UpcomingMoviesAdapter
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -23,12 +24,28 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         viewModel.getTopRatedMovies()
+        viewModel.getGenres()
 
         binding.recyclerTop.setHasFixedSize(true)
-        binding.recyclerTop.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerTop.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL, false
+        )
 
         viewModel.topMovies.observe(this) {
             binding.recyclerTop.adapter = TopMoviesAdapter(this, it.results)
+        }
+
+        viewModel.getUpcomingMovies()
+
+        binding.recyclerUpcoming.setHasFixedSize(true)
+        binding.recyclerUpcoming.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.VERTICAL, false
+        )
+
+        viewModel.upcomingMovies.observe(this){
+            binding.recyclerUpcoming.adapter = UpcomingMoviesAdapter(this, it.results)
         }
 
     }
