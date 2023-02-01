@@ -1,6 +1,7 @@
 package dev.prince.moviebuzz.api
 
 import dev.prince.moviebuzz.data.MovieResult
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,5 +12,11 @@ interface ApiService {
     @GET("top_rated")
     suspend fun getTopRated(
         @Query("api_key") apiKey: String = API_KEY
-    ): MovieResult
+    ): Response<MovieResult>
+
+   /* @GET("top_rated")
+    suspend fun getTopRated(
+        @Query("api_key") apiKey: String = API_KEY
+    ): MovieResult*/
+
 }
