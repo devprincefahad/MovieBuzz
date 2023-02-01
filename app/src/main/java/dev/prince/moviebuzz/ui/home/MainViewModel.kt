@@ -1,7 +1,6 @@
 package dev.prince.moviebuzz.ui.home
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,24 +18,12 @@ class MainViewModel @Inject constructor(
     private val api: ApiService
 ) : ViewModel() {
 
-    private val top_moviesMLD = MutableLiveData<MovieResult>()
-    val topMoviesLD: LiveData<MovieResult> = top_moviesMLD
+    val topMovies = MutableLiveData<MovieResult>()
 
     fun getTopRatedMovies() {
         viewModelScope.launch {
             try {
-                val result = api.getTopRated()
-                if (result.isSuccessful) {
-                    if (result.body() != null) {
-                        Log.d(
-                            TAG,
-                            "getTopRatedMovies: Received ${result} " +
-                                    "number of movies \n Movies: ${result.body()}"
-                        )
-                        top_moviesMLD.value = result.body()
-                    }
-                }
-
+                topMovies.value = api.getTopRated()
             } catch (e: HttpException) {
                 e.printStackTrace()
                 Log.d(

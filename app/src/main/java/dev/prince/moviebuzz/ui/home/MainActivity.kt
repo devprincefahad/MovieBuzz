@@ -15,8 +15,6 @@ import dev.prince.moviebuzz.ui.adapter.TopMoviesAdapter
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    lateinit var topAdapter: TopMoviesAdapter
-    private var topMovies = mutableListOf<Result>()
     lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
 
@@ -27,17 +25,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.getTopRatedMovies()
 
         binding.recyclerTop.setHasFixedSize(true)
-        binding.recyclerTop.layoutManager =
-            LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
-        topAdapter = TopMoviesAdapter(this@MainActivity, topMovies)
-        binding.recyclerTop.adapter = topAdapter
+        binding.recyclerTop.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        viewModel.topMoviesLD.observe(this) {
-            if (it != null && !it.results.isNullOrEmpty()) {
-                Log.d("mainactivity", it.results.toString())
-                topMovies.clear()
-                topMovies.addAll(it.results)
-            }
+        viewModel.topMovies.observe(this) {
+            binding.recyclerTop.adapter = TopMoviesAdapter(this, it.results)
         }
 
     }

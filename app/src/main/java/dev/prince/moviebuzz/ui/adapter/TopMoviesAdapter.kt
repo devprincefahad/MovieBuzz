@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.prince.moviebuzz.R
 import dev.prince.moviebuzz.data.Result
+import dev.prince.moviebuzz.util.getDownloadUrl
 
 class TopMoviesAdapter(
     val context: Context,
@@ -24,7 +25,7 @@ class TopMoviesAdapter(
 
     override fun onBindViewHolder(holder: TopMoviesViewHolder, position: Int) {
 
-        Glide.with(context).load(topMovies[position].backdrop_path).into(holder.image)
+        Glide.with(context).load(topMovies[position].backdrop_path.getDownloadUrl()).into(holder.image)
 
         holder.title.text = topMovies[position].title
     }
