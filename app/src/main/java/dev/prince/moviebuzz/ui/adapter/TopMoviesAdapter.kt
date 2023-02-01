@@ -9,18 +9,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.prince.moviebuzz.R
-import dev.prince.moviebuzz.data.Result
+import dev.prince.moviebuzz.data.Movie
 import dev.prince.moviebuzz.util.getDownloadUrl
 
 class TopMoviesAdapter(
     val context: Context,
-    private val topMovies: List<Result>
+    private val topMovies: List<Movie>
 ) : RecyclerView.Adapter<TopMoviesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         TopMoviesViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.vertical_movies_list_item, parent, false)
+                .inflate(R.layout.list_item_top_rated, parent, false)
         )
 
     override fun onBindViewHolder(holder: TopMoviesViewHolder, position: Int) {
@@ -36,7 +36,7 @@ class TopMoviesAdapter(
 
 class TopMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    val title: TextView = itemView.findViewById(R.id.top_title)
-    val image:ImageView = itemView.findViewById(R.id.top_img)
+    val title: TextView = itemView.findViewById(R.id.textView_title)
+    val image:ImageView = itemView.findViewById(R.id.imageView_poster)
 
 }

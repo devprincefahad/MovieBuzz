@@ -1,9 +1,10 @@
 package dev.prince.moviebuzz.data
 
-data class
-MovieResult(
+import com.google.gson.annotations.SerializedName
+
+data class MovieResult(
     val page: Int,
-    val results: List<Result>,
+    @SerializedName("results") val movies: List<Movie>,
     val total_pages: Int,
     val total_results: Int
 )
