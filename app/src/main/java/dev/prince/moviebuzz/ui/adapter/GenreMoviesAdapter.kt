@@ -29,7 +29,7 @@ class GenreMoviesAdapter(
 
     override fun onBindViewHolder(holder: GenreMoviesViewHolder, position: Int) {
 
-        Glide.with(context).load(genres[position].backdrop_path.getDownloadUrl())
+        Glide.with(context).load(genres[position].backdrop_path?.getDownloadUrl())
             .into(holder.image)
 
         holder.title.text = genres[position].title

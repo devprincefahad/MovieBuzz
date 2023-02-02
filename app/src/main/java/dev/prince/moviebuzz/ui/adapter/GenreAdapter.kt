@@ -30,7 +30,7 @@ class GenreAdapter(
         holder.tvCategory.text = genres[position].name
         holder.categoryCardView.setOnClickListener {
             val intent = Intent(context, GenreMoviesActivity::class.java)
-            intent.putExtra("id", genres[position].id.toString())
+            intent.putExtra("id", genres[position].id)
             intent.putExtra("name", genres[position].name)
             context.startActivity(intent)
         }

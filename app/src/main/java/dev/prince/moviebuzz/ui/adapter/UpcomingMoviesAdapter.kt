@@ -28,7 +28,7 @@ class UpcomingMoviesAdapter(
 
     override fun onBindViewHolder(holder: UpcomingMoviesViewHolder, position: Int) {
 
-        Glide.with(context).load(upcomingMovies[position].backdrop_path.getDownloadUrl())
+        Glide.with(context).load(upcomingMovies[position].backdrop_path?.getDownloadUrl())
             .into(holder.image)
 
         holder.title.text = upcomingMovies[position].title

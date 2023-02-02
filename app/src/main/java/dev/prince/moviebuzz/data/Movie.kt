@@ -2,7 +2,7 @@ package dev.prince.moviebuzz.data
 
 data class Movie(
     val adult: Boolean,
-    val backdrop_path: String,
+    val backdrop_path: String?,
     val genre_ids: List<Int>,
     val id: Int,
     val original_language: String,

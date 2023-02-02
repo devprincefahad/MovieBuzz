@@ -28,7 +28,7 @@ class TopMoviesAdapter(
 
     override fun onBindViewHolder(holder: TopMoviesViewHolder, position: Int) {
 
-        Glide.with(context).load(topMovies[position].backdrop_path.getDownloadUrl())
+        Glide.with(context).load(topMovies[position].backdrop_path?.getDownloadUrl())
             .into(holder.image)
 
         holder.title.text = topMovies[position].title
