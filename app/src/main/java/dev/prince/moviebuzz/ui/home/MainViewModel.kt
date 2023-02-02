@@ -13,8 +13,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-private const val TAG = "MainViewModel"
-
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val api: ApiService

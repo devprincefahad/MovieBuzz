@@ -5,13 +5,19 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".MovieBuzzApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".MovieBuzzApp"
         android:theme="@style/Theme.MovieBuzz">
+        <activity
+            android:name=".ui.home.GenreMoviesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.MovieDetailsActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.home.MainActivity"
             android:exported="true">

@@ -26,8 +26,10 @@ interface ApiService {
         @Query("api_key") apiKey: String = API_KEY
     ): GenreResponse
 
-    @GET("movie/{movie_id}")
-    suspend fun getMovieDetail(
-        @Path("movie_id") movieId: Int
-    ): MovieDetail
+    @GET("discover/movie")
+    suspend fun getMoviesGenre(
+        @Query("with_genres") genreId: Int,
+        @Query("api_key") apiKey: String = API_KEY
+    ): MovieResult
+
 }
