@@ -10,12 +10,11 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import dev.prince.moviebuzz.R
 import dev.prince.moviebuzz.data.Genre
-import dev.prince.moviebuzz.ui.home.GenreMoviesActivity
+import dev.prince.moviebuzz.ui.home.LoadMoviesActivity
 
 class GenreAdapter(
     private val context: Context,
     private val genres: List<Genre>
-
 ) : RecyclerView.Adapter<CategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder =
@@ -29,7 +28,7 @@ class GenreAdapter(
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         holder.tvCategory.text = genres[position].name
         holder.categoryCardView.setOnClickListener {
-            val intent = Intent(context, GenreMoviesActivity::class.java)
+            val intent = Intent(context, LoadMoviesActivity::class.java)
             intent.putExtra("id", genres[position].id)
             intent.putExtra("name", genres[position].name)
             context.startActivity(intent)

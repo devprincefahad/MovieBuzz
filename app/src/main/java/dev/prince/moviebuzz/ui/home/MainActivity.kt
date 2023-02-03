@@ -1,12 +1,11 @@
 package dev.prince.moviebuzz.ui.home
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import dev.prince.moviebuzz.R
@@ -24,6 +23,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        binding.imgAllBookmarks.setOnClickListener {
+            val intent = Intent(this, LoadMoviesActivity::class.java)
+            startActivity(intent)
+        }
 
         viewModel.topMovies.observe(this) {
             binding.recyclerTop.adapter = TopMoviesAdapter(this, it.movies)

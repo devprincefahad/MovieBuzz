@@ -39,7 +39,7 @@ class TopMoviesAdapter(
             intent.putExtra("original_title", topMovies[position].original_title)
             intent.putExtra("overview", topMovies[position].overview)
             intent.putExtra("backdrop_path", topMovies[position].backdrop_path)
-            intent.putExtra("poster_path", topMovies[position].poster_path)
+//            intent.putExtra("poster_path", topMovies[position].poster_path)
             intent.putExtra("release_date", topMovies[position].release_date)
             intent.putExtra("vote_average", topMovies[position].vote_average.toString())
             intent.putExtra("original_language", topMovies[position].original_language)

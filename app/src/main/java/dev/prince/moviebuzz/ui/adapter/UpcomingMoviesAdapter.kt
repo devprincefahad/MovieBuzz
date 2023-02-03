@@ -39,7 +39,6 @@ class UpcomingMoviesAdapter(
             intent.putExtra("original_title", upcomingMovies[position].original_title)
             intent.putExtra("overview", upcomingMovies[position].overview)
             intent.putExtra("backdrop_path", upcomingMovies[position].backdrop_path)
-            intent.putExtra("poster_path", upcomingMovies[position].poster_path)
             intent.putExtra("release_date", upcomingMovies[position].release_date)
             intent.putExtra("vote_average", upcomingMovies[position].vote_average.toString())
             intent.putExtra("original_language", upcomingMovies[position].original_language)

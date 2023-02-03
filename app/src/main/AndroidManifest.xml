@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieBuzz">
         <activity
-            android:name=".ui.home.GenreMoviesActivity"
+            android:name=".ui.home.LoadMoviesActivity"
             android:exported="false" />
         <activity
             android:name=".ui.home.MovieDetailsActivity"

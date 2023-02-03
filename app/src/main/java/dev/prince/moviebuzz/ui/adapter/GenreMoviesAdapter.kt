@@ -40,7 +40,6 @@ class GenreMoviesAdapter(
             intent.putExtra("original_title", genres[position].original_title)
             intent.putExtra("overview", genres[position].overview)
             intent.putExtra("backdrop_path", genres[position].backdrop_path)
-            intent.putExtra("poster_path", genres[position].poster_path)
             intent.putExtra("release_date", genres[position].release_date)
             intent.putExtra("vote_average", genres[position].vote_average.toString())
             intent.putExtra("original_language", genres[position].original_language)
