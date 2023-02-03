@@ -40,7 +40,9 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun checkMovie(title: String) {
         viewModelScope.launch {
+            withContext(Dispatchers.IO) {
                 isBookmarked.postValue(repository.checkBookmark(title))
+            }
         }
     }
 

@@ -2,6 +2,9 @@ package dev.prince.moviebuzz.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -10,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.prince.moviebuzz.R
 import dev.prince.moviebuzz.data.Movie
 import dev.prince.moviebuzz.databinding.ActivityLoadMoviesBinding
+import dev.prince.moviebuzz.db.MovieDatabase
 import dev.prince.moviebuzz.ui.adapter.GenreMoviesAdapter
 
 @AndroidEntryPoint
@@ -17,6 +21,8 @@ class LoadMoviesActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityLoadMoviesBinding
     private val viewModel: LoadMoviesViewModel by viewModels()
+    private lateinit var database: MovieDatabase
+    var nList = mutableListOf<Movie>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +57,6 @@ class LoadMoviesActivity : AppCompatActivity() {
 
     private fun loadSavedDB() {
         viewModel.allNews.observe(this, Observer {
-            var nList = mutableListOf<Movie>()
             for (i in it) {
                 nList.add(
                     Movie(
@@ -66,7 +71,15 @@ class LoadMoviesActivity : AppCompatActivity() {
                     )
                 )
             }
+            Log.d("data", nList.toString())
+            if (nList.isNullOrEmpty()) {
+                Toast.makeText(this, "No data saved", Toast.LENGTH_SHORT).show()
+            }
+            viewModel.genreMovies.observe(this) {
+                binding.recyclerGenre.adapter = GenreMoviesAdapter(this,nList)
+            }
         })
+        database = MovieDatabase.getDatabase(this)
     }
 
     private fun getGenreMoviesList(genreId: Int) {
