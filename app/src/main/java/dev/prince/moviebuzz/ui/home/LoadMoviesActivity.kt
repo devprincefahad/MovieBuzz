@@ -75,8 +75,9 @@ class LoadMoviesActivity : AppCompatActivity() {
             if (nList.isNullOrEmpty()) {
                 Toast.makeText(this, "No data saved", Toast.LENGTH_SHORT).show()
             }
+            Toast.makeText(this, "Data present ${nList.toString()}", Toast.LENGTH_SHORT).show()
             viewModel.genreMovies.observe(this) {
-                binding.recyclerGenre.adapter = GenreMoviesAdapter(this,nList)
+                binding.recyclerGenre.adapter = GenreMoviesAdapter(this, nList)
             }
         })
         database = MovieDatabase.getDatabase(this)

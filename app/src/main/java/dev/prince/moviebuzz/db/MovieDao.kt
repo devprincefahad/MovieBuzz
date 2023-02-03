@@ -13,7 +13,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(movies: Movie)
 
-    @Query("DELETE FROM movie WHERE title=:title")
+    @Query("DELETE FROM movie WHERE original_title=:title")
     suspend fun delete(title: String)
 
     @Query("SELECT * from movie")
