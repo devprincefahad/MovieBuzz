@@ -1,39 +1,32 @@
-package dev.prince.moviebuzz.ui.home
+package dev.prince.moviebuzz.ui.movies
 
-import android.app.Application
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.prince.moviebuzz.api.ApiService
-import dev.prince.moviebuzz.data.Movie
 import dev.prince.moviebuzz.data.MovieResult
 import dev.prince.moviebuzz.db.MovieDao
 import dev.prince.moviebuzz.db.MovieDatabase
-import dev.prince.moviebuzz.repo.Repository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
-class LoadMoviesViewModel @Inject constructor(
-    application: Application,
-    private val api: ApiService
-) : AndroidViewModel(application) {
-
-    private val repository: Repository
-    val allNews: LiveData<List<Movie>>
+class MoviesViewModel @Inject constructor(
+    private val api: ApiService,
+    private val db: MovieDatabase
+) : ViewModel() {
 
     val genreMovies = MutableLiveData<MovieResult>()
     val error = MutableLiveData<String>()
+    val showProgressBar = MutableLiveData(false)
 
-    init {
-        val dao = MovieDatabase.getDatabase(application).movieDao()
-        repository = Repository(dao)
-        allNews = repository.allNews
-    }
+    val bookmarkedMovies = db.movieDao().getBookmarkedMovies()
+    val genreName = MutableLiveData<String>()
 
-    fun getGenreMoviesList(id: Int) {
+    fun getMoviesForGenre(id: Int) {
+        showProgressBar.value = true
         viewModelScope.launch {
+            genreName.value = db.genreDao().getGenre(id)?.name
             try {
                 genreMovies.value = api.getMoviesGenre(id)
             } catch (e: HttpException) {
@@ -42,6 +35,8 @@ class LoadMoviesViewModel @Inject constructor(
             } catch (e: Exception) {
                 error.value = "Something went wrong"
                 e.printStackTrace()
+            } finally {
+                showProgressBar.value = false
             }
         }
     }

@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import dev.prince.moviebuzz.R
 import dev.prince.moviebuzz.data.Movie
-import dev.prince.moviebuzz.ui.home.MovieDetailsActivity
+import dev.prince.moviebuzz.ui.details.MovieDetailsActivity
 import dev.prince.moviebuzz.util.getDownloadUrl
 
 class TopMoviesAdapter(
@@ -28,24 +28,19 @@ class TopMoviesAdapter(
 
     override fun onBindViewHolder(holder: TopMoviesViewHolder, position: Int) {
 
-        Glide.with(context).load(topMovies[position].backdrop_path?.getDownloadUrl())
+        val movie = topMovies[position]
+
+        Glide.with(context).load(movie.backdrop_path?.getDownloadUrl())
             .into(holder.image)
 
-        holder.title.text = topMovies[position].title
-        holder.vote.text = topMovies[position].vote_average.toString()
+        holder.title.text = movie.title
+        holder.vote.text = movie.vote_average.toString()
 
         holder.topCardView.setOnClickListener {
             val intent = Intent(context, MovieDetailsActivity::class.java)
-            intent.putExtra("original_title", topMovies[position].original_title)
-            intent.putExtra("overview", topMovies[position].overview)
-            intent.putExtra("backdrop_path", topMovies[position].backdrop_path)
-//            intent.putExtra("poster_path", topMovies[position].poster_path)
-            intent.putExtra("release_date", topMovies[position].release_date)
-            intent.putExtra("vote_average", topMovies[position].vote_average.toString())
-            intent.putExtra("original_language", topMovies[position].original_language)
+            intent.putExtra("movie", movie)
             context.startActivity(intent)
         }
-
     }
 
     override fun getItemCount(): Int = topMovies.size

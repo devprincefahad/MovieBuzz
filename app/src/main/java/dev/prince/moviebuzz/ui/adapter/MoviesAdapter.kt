@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import dev.prince.moviebuzz.R
 import dev.prince.moviebuzz.data.Movie
-import dev.prince.moviebuzz.ui.home.MovieDetailsActivity
+import dev.prince.moviebuzz.ui.details.MovieDetailsActivity
 import dev.prince.moviebuzz.util.getDownloadUrl
 
-class UpcomingMoviesAdapter(
+class MoviesAdapter(
     val context: Context,
     private val upcomingMovies: List<Movie>
 ) : RecyclerView.Adapter<UpcomingMoviesViewHolder>() {
@@ -23,25 +23,22 @@ class UpcomingMoviesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         UpcomingMoviesViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.list_item_upcoming, parent, false)
+                .inflate(R.layout.list_item_movie, parent, false)
         )
 
     override fun onBindViewHolder(holder: UpcomingMoviesViewHolder, position: Int) {
 
-        Glide.with(context).load(upcomingMovies[position].backdrop_path?.getDownloadUrl())
+        val movie = upcomingMovies[position]
+
+        Glide.with(context).load(movie.backdrop_path?.getDownloadUrl())
             .into(holder.image)
 
-        holder.title.text = upcomingMovies[position].title
-        holder.vote.text = upcomingMovies[position].vote_average.toString()
+        holder.title.text = movie.title
+        holder.vote.text = movie.vote_average.toString()
 
         holder.upcomingLayout.setOnClickListener {
             val intent = Intent(context, MovieDetailsActivity::class.java)
-            intent.putExtra("original_title", upcomingMovies[position].original_title)
-            intent.putExtra("overview", upcomingMovies[position].overview)
-            intent.putExtra("backdrop_path", upcomingMovies[position].backdrop_path)
-            intent.putExtra("release_date", upcomingMovies[position].release_date)
-            intent.putExtra("vote_average", upcomingMovies[position].vote_average.toString())
-            intent.putExtra("original_language", upcomingMovies[position].original_language)
+            intent.putExtra("movie", movie)
             context.startActivity(intent)
         }
 

@@ -1,26 +1,36 @@
 package dev.prince.moviebuzz.ui.home
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.prince.moviebuzz.api.ApiService
-import dev.prince.moviebuzz.data.GenreResponse
-import dev.prince.moviebuzz.data.MovieResult
+import dev.prince.moviebuzz.data.Genre
+import dev.prince.moviebuzz.data.Movie
+import dev.prince.moviebuzz.db.MovieDatabase
+import dev.prince.moviebuzz.util.TOP_RATED
+import dev.prince.moviebuzz.util.UPCOMING
+import kotlinx.coroutines.delay
 import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
+private const val TAG = "MainViewModel"
+
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val api: ApiService
+    private val api: ApiService,
+    db: MovieDatabase
 ) : ViewModel() {
 
-    val topMovies = MutableLiveData<MovieResult>()
-    val upcomingMovies = MutableLiveData<MovieResult>()
-    val genre = MutableLiveData<GenreResponse>()
+    private val movieDao = db.movieDao()
+    private val genreDao = db.genreDao()
+
+    val topMovies = movieDao.getTopRatedMovies()
+    val upcomingMovies = movieDao.getUpcomingMovies()
+    val genre = genreDao.getAllGenres()
 
     val error = MutableLiveData<String>()
 
@@ -32,13 +42,22 @@ class MainViewModel @Inject constructor(
 
     private fun getTopRatedMovies() {
         viewModelScope.launch {
+            delay(200)
             try {
-                topMovies.value = api.getTopRated()
+                val apiResult = api.getTopRated()
+                val movies = apiResult.movies.onEach {
+                    it.type = TOP_RATED
+                }
+                movieDao.insert(movies)
             } catch (e: HttpException) {
-                error.value = "Something went wrong, code: ${e.code()}"
+                if (movieDao.getTopRatedMoviesSize() == 0) {
+                    error.value = "Something went wrong, code: ${e.code()}"
+                }
                 e.printStackTrace()
             } catch (e: Exception) {
-                error.value = "Something went wrong"
+                if (movieDao.getTopRatedMoviesSize() == 0) {
+                    error.value = "Something went wrong"
+                }
                 e.printStackTrace()
             }
         }
@@ -47,12 +66,21 @@ class MainViewModel @Inject constructor(
     private fun getUpcomingMovies() {
         viewModelScope.launch {
             try {
-                upcomingMovies.value = api.getUpcoming()
+                val apiResult = api.getUpcoming()
+                val movies = apiResult.movies.onEach { it.type = UPCOMING }
+                if (movies.isNotEmpty()) {
+                    movieDao.clearUpcomingMovies()
+                    movieDao.insert(movies)
+                }
             } catch (e: HttpException) {
-                error.value = "Something went wrong, code: ${e.code()}"
+                if (movieDao.getUpcomingMoviesSize() == 0) {
+                    error.value = "Something went wrong, code: ${e.code()}"
+                }
                 e.printStackTrace()
             } catch (e: Exception) {
-                error.value = "Something went wrong"
+                if (movieDao.getUpcomingMoviesSize() == 0) {
+                    error.value = "Something went wrong"
+                }
                 e.printStackTrace()
             }
         }
@@ -61,12 +89,16 @@ class MainViewModel @Inject constructor(
     private fun getGenres() {
         viewModelScope.launch {
             try {
-                genre.value = api.getGenres()
+                genreDao.insert(api.getGenres().genres)
             } catch (e: HttpException) {
-                error.value = "Something went wrong, code: ${e.code()}"
+                if (genreDao.getGenresSize() == 0) {
+                    error.value = "Something went wrong, code: ${e.code()}"
+                }
                 e.printStackTrace()
             } catch (e: Exception) {
-                error.value = "Something went wrong"
+                if (genreDao.getGenresSize() == 0) {
+                    error.value = "Something went wrong"
+                }
                 e.printStackTrace()
             }
         }
