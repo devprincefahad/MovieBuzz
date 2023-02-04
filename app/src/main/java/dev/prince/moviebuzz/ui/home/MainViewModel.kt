@@ -17,8 +17,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-private const val TAG = "MainViewModel"
-
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val api: ApiService,
@@ -42,7 +40,6 @@ class MainViewModel @Inject constructor(
 
     private fun getTopRatedMovies() {
         viewModelScope.launch {
-            delay(200)
             try {
                 val apiResult = api.getTopRated()
                 val movies = apiResult.movies.onEach {

@@ -17,6 +17,7 @@
     <color name="colorTextHeading">#000000</color>
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="postSplashScreenTheme">@style/Theme.MovieBuzz</item>
     </style>
 
