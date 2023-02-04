@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import dev.prince.moviebuzz.R
 import dev.prince.moviebuzz.data.Movie
+import dev.prince.moviebuzz.databinding.ListItemTopRatedBinding
 import dev.prince.moviebuzz.ui.details.MovieDetailsActivity
 import dev.prince.moviebuzz.util.getDownloadUrl
 
@@ -22,36 +23,43 @@ class TopMoviesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         TopMoviesViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.list_item_top_rated, parent, false)
+            ListItemTopRatedBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent, false
+            )
         )
 
     override fun onBindViewHolder(holder: TopMoviesViewHolder, position: Int) {
 
-        val movie = topMovies[position]
+        with(holder) {
 
-        Glide.with(context).load(movie.backdrop_path?.getDownloadUrl())
-            .into(holder.image)
+            val movie = topMovies[position]
 
-        holder.title.text = movie.title
-        holder.vote.text = movie.vote_average.toString()
+            Glide.with(context).load(movie.backdrop_path?.getDownloadUrl())
+                .into(binding.imageViewPoster)
 
-        holder.topCardView.setOnClickListener {
-            val intent = Intent(context, MovieDetailsActivity::class.java)
-            intent.putExtra("movie", movie)
-            context.startActivity(intent)
+            binding.textViewTitle.text = movie.title
+            binding.textViewVote.text = movie.vote_average.toString()
+
+            binding.topCardView.setOnClickListener {
+                val intent = Intent(context, MovieDetailsActivity::class.java)
+                intent.putExtra("movie", movie)
+                context.startActivity(intent)
+            }
         }
+
     }
 
     override fun getItemCount(): Int = topMovies.size
 
 }
 
-class TopMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class TopMoviesViewHolder(val binding: ListItemTopRatedBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
-    val title: TextView = itemView.findViewById(R.id.textView_title)
-    val image: ImageView = itemView.findViewById(R.id.imageView_poster)
-    val vote: TextView = itemView.findViewById(R.id.textView_vote)
-    val topCardView: MaterialCardView = itemView.findViewById(R.id.topCardView)
+//    val title: TextView = itemView.findViewById(R.id.textView_title)
+//    val image: ImageView = itemView.findViewById(R.id.imageView_poster)
+//    val vote: TextView = itemView.findViewById(R.id.textView_vote)
+//    val topCardView: MaterialCardView = itemView.findViewById(R.id.topCardView)
 
 }

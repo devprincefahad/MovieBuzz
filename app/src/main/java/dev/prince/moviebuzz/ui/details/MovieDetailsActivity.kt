@@ -2,10 +2,7 @@ package dev.prince.moviebuzz.ui.details
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import dev.prince.moviebuzz.R
@@ -21,7 +18,8 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details)
+        binding = ActivityMovieDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val movie = intent.getSerializableExtra("movie") as Movie
 

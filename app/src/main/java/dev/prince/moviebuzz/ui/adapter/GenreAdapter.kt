@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import dev.prince.moviebuzz.R
 import dev.prince.moviebuzz.data.Genre
+import dev.prince.moviebuzz.databinding.ListItemGenreBinding
 import dev.prince.moviebuzz.ui.movies.MoviesActivity
 
 class GenreAdapter(
@@ -19,15 +20,16 @@ class GenreAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder =
         CategoryViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.list_item_genre,
-                parent, false
+            ListItemGenreBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
             )
         )
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        holder.tvCategory.text = genres[position].name
-        holder.categoryCardView.setOnClickListener {
+        holder.binding.tvCategory.text = genres[position].name
+        holder.binding.categoryCardView.setOnClickListener {
             val intent = Intent(context, MoviesActivity::class.java)
             intent.putExtra("id", genres[position].id)
             context.startActivity(intent)
@@ -40,7 +42,8 @@ class GenreAdapter(
 
 }
 
-class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val tvCategory: TextView = itemView.findViewById(R.id.tv_category)
-    val categoryCardView: CardView = itemView.findViewById(R.id.categoryCardView)
+class CategoryViewHolder(val binding: ListItemGenreBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+//    val tvCategory: TextView = itemView.findViewById(R.id.tv_category)
+//    val categoryCardView: CardView = itemView.findViewById(R.id.categoryCardView)
 }

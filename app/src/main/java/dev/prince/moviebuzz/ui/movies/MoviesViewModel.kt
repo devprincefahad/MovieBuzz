@@ -4,7 +4,6 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.prince.moviebuzz.api.ApiService
 import dev.prince.moviebuzz.data.MovieResult
-import dev.prince.moviebuzz.db.MovieDao
 import dev.prince.moviebuzz.db.MovieDatabase
 import kotlinx.coroutines.launch
 import retrofit2.HttpException

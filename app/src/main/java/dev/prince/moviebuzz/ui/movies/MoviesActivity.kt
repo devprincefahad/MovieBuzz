@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import dev.prince.moviebuzz.R
 import dev.prince.moviebuzz.databinding.ActivityLoadMoviesBinding
 import dev.prince.moviebuzz.ui.adapter.MoviesAdapter
 
@@ -19,7 +17,8 @@ class MoviesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_load_movies)
+        binding = ActivityLoadMoviesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         binding.imgBackArrow.setOnClickListener {
             onBackPressed()

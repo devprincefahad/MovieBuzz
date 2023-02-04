@@ -1,18 +1,13 @@
 package dev.prince.moviebuzz.ui.home
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.prince.moviebuzz.api.ApiService
-import dev.prince.moviebuzz.data.Genre
-import dev.prince.moviebuzz.data.Movie
 import dev.prince.moviebuzz.db.MovieDatabase
 import dev.prince.moviebuzz.util.TOP_RATED
 import dev.prince.moviebuzz.util.UPCOMING
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -32,6 +27,8 @@ class MainViewModel @Inject constructor(
 
     val error = MutableLiveData<String>()
 
+    val showProgressBar = MutableLiveData(false)
+
     init {
         getTopRatedMovies()
         getGenres()
@@ -39,6 +36,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getTopRatedMovies() {
+        showProgressBar.value = true
         viewModelScope.launch {
             try {
                 val apiResult = api.getTopRated()
@@ -56,11 +54,14 @@ class MainViewModel @Inject constructor(
                     error.value = "Something went wrong"
                 }
                 e.printStackTrace()
+            } finally {
+                showProgressBar.value = false
             }
         }
     }
 
     private fun getUpcomingMovies() {
+        showProgressBar.value = true
         viewModelScope.launch {
             try {
                 val apiResult = api.getUpcoming()
@@ -79,11 +80,14 @@ class MainViewModel @Inject constructor(
                     error.value = "Something went wrong"
                 }
                 e.printStackTrace()
+            } finally {
+                showProgressBar.value = false
             }
         }
     }
 
     private fun getGenres() {
+        showProgressBar.value = true
         viewModelScope.launch {
             try {
                 genreDao.insert(api.getGenres().genres)
@@ -97,6 +101,8 @@ class MainViewModel @Inject constructor(
                     error.value = "Something went wrong"
                 }
                 e.printStackTrace()
+            } finally {
+                showProgressBar.value = false
             }
         }
     }

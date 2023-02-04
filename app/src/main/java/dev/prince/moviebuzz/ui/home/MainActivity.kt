@@ -3,13 +3,12 @@ package dev.prince.moviebuzz.ui.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import dev.prince.moviebuzz.R
 import dev.prince.moviebuzz.databinding.ActivityMainBinding
 import dev.prince.moviebuzz.ui.adapter.GenreAdapter
 import dev.prince.moviebuzz.ui.adapter.TopMoviesAdapter
@@ -24,9 +23,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen() // Complying with Android 12 Splash Screen guidelines
-
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        viewModel.showProgressBar.observe(this) {
+            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+            binding.textViewTopRated.visibility = if (it) View.GONE else View.VISIBLE
+            binding.textViewCategories.visibility = if (it) View.GONE else View.VISIBLE
+            binding.textViewUpcoming.visibility = if (it) View.GONE else View.VISIBLE
+        }
 
         binding.imgAllBookmarks.setOnClickListener {
             val intent = Intent(this, MoviesActivity::class.java)
@@ -42,7 +48,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.genre.observe(this) {
-            binding.recyclerCategories.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
+            binding.recyclerCategories.layoutManager =
+                GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
             binding.recyclerCategories.adapter = GenreAdapter(this@MainActivity, it)
         }
 
