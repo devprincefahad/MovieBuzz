@@ -27,8 +27,6 @@ class MainViewModel @Inject constructor(
 
     val error = MutableLiveData<String>()
 
-    val showProgressBar = MutableLiveData(false)
-
     init {
         getTopRatedMovies()
         getGenres()
@@ -36,7 +34,6 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getTopRatedMovies() {
-        showProgressBar.value = true
         viewModelScope.launch {
             try {
                 val apiResult = api.getTopRated()
@@ -54,14 +51,11 @@ class MainViewModel @Inject constructor(
                     error.value = "Something went wrong"
                 }
                 e.printStackTrace()
-            } finally {
-                showProgressBar.value = false
             }
         }
     }
 
     private fun getUpcomingMovies() {
-        showProgressBar.value = true
         viewModelScope.launch {
             try {
                 val apiResult = api.getUpcoming()
@@ -80,14 +74,11 @@ class MainViewModel @Inject constructor(
                     error.value = "Something went wrong"
                 }
                 e.printStackTrace()
-            } finally {
-                showProgressBar.value = false
             }
         }
     }
 
     private fun getGenres() {
-        showProgressBar.value = true
         viewModelScope.launch {
             try {
                 genreDao.insert(api.getGenres().genres)
@@ -101,8 +92,6 @@ class MainViewModel @Inject constructor(
                     error.value = "Something went wrong"
                 }
                 e.printStackTrace()
-            } finally {
-                showProgressBar.value = false
             }
         }
     }

@@ -27,13 +27,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.showProgressBar.observe(this) {
-            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
-            binding.textViewTopRated.visibility = if (it) View.GONE else View.VISIBLE
-            binding.textViewCategories.visibility = if (it) View.GONE else View.VISIBLE
-            binding.textViewUpcoming.visibility = if (it) View.GONE else View.VISIBLE
-        }
-
         binding.imgAllBookmarks.setOnClickListener {
             val intent = Intent(this, MoviesActivity::class.java)
             startActivity(intent)
