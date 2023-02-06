@@ -13,14 +13,16 @@ MovieBuzz is an android application that shows user the upcoming movies and top 
  - Offline mode Support
  - Dark/Light mode Support
  
-   ## 🛠 Tech Used
+## 🛠 Tech Used
 - TMDB Api
 - Kotlin
-- Hilt
 - Room Database
+- Repository
 - Retrofit
 - Live Data
 - Coroutines
 - Glide
-- MVVM
+- MVVM (Model-View-Viewmodel)
+- SplashScreen Compat
+- Dependency Injection using Hilt
 - Offline Caching
