@@ -8,6 +8,7 @@ MovieBuzz is an android application that shows user the upcoming movies and top 
  - Short Movies overview to save your time
  - Get Upcoming Movies updates
  - Top rated Movies from around the Globe
+ - Explore from different genres
  - Enables to bookmark favourite Movies
  - Offline mode Support
  - Dark/Light mode Support
